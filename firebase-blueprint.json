@@ -1,0 +1,483 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User account for authentication and role-based access",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string" },
+        "passwordHash": { "type": "string" },
+        "role": { "type": "string", "enum": ["Admin", "Manager", "Salesman", "Accountant"] },
+        "name": { "type": "string" },
+        "mobile": { "type": "string" },
+        "avatar": { "type": "string" },
+        "status": { "type": "string", "enum": ["Active", "Disabled"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "username", "role", "name"]
+    },
+    "Setting": {
+      "title": "Setting",
+      "description": "Application settings and business metadata",
+      "type": "object",
+      "properties": {
+        "key": { "type": "string" },
+        "value": { "type": "string" }
+      },
+      "required": ["key"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Inventory product item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "sku": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "brand": { "type": "string" },
+        "unit": { "type": "string" },
+        "purchasePrice": { "type": "number" },
+        "salePrice": { "type": "number" },
+        "openingStock": { "type": "number" },
+        "currentStock": { "type": "number" },
+        "minStock": { "type": "number" },
+        "supplier": { "type": "string" },
+        "image": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "name", "sku", "purchasePrice", "salePrice"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product category",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Customer entity",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "mobile": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "openingBalance": { "type": "number" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "Supplier": {
+      "title": "Supplier",
+      "description": "Vendor or supplier entity",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "company": { "type": "string" },
+        "mobile": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" },
+        "openingBalance": { "type": "number" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "Sale": {
+      "title": "Sale",
+      "description": "Sales invoice record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "invoiceNo": { "type": "string" },
+        "date": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "tax": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "paidAmount": { "type": "number" },
+        "dueAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "notes": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "invoiceNo", "date", "grandTotal"]
+    },
+    "SaleItem": {
+      "title": "SaleItem",
+      "description": "Individual line item for a sales invoice",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "saleId": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "quantity": { "type": "number" },
+        "purchaseRate": { "type": "number" },
+        "saleRate": { "type": "number" },
+        "total": { "type": "number" }
+      },
+      "required": ["id", "saleId", "productId", "quantity", "saleRate"]
+    },
+    "Purchase": {
+      "title": "Purchase",
+      "description": "Purchase order or invoice from vendor",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "invoiceNo": { "type": "string" },
+        "date": { "type": "string" },
+        "supplierId": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "tax": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "paidAmount": { "type": "number" },
+        "dueAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "notes": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "invoiceNo", "date", "grandTotal"]
+    },
+    "PurchaseItem": {
+      "title": "PurchaseItem",
+      "description": "Line item for a purchase order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "purchaseId": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "quantity": { "type": "number" },
+        "purchaseRate": { "type": "number" },
+        "total": { "type": "number" }
+      },
+      "required": ["id", "purchaseId", "productId", "quantity", "purchaseRate"]
+    },
+    "SalesReturn": {
+      "title": "SalesReturn",
+      "description": "Sales return credit note record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "returnNo": { "type": "string" },
+        "date": { "type": "string" },
+        "saleId": { "type": "string" },
+        "invoiceNo": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "quantity": { "type": "number" },
+        "rate": { "type": "number" },
+        "refundAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "reason": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "returnNo", "date", "refundAmount"]
+    },
+    "PurchaseReturn": {
+      "title": "PurchaseReturn",
+      "description": "Purchase return debit note record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "returnNo": { "type": "string" },
+        "date": { "type": "string" },
+        "purchaseId": { "type": "string" },
+        "invoiceNo": { "type": "string" },
+        "supplierId": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "quantity": { "type": "number" },
+        "rate": { "type": "number" },
+        "refundAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "reason": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "returnNo", "date", "refundAmount"]
+    },
+    "StockMovement": {
+      "title": "StockMovement",
+      "description": "Audit trail for physical inventory movements",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "type": { "type": "string" },
+        "quantity": { "type": "number" },
+        "previousStock": { "type": "number" },
+        "newStock": { "type": "number" },
+        "reference": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "productId", "type", "quantity"]
+    },
+    "CashTransaction": {
+      "title": "CashTransaction",
+      "description": "Cash in/out journal transaction",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "type": { "type": "string", "enum": ["In", "Out"] },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "description": { "type": "string" },
+        "reference": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "type", "amount"]
+    },
+    "BankAccount": {
+      "title": "BankAccount",
+      "description": "Commercial bank ledger account",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "bankName": { "type": "string" },
+        "accountName": { "type": "string" },
+        "accountNumber": { "type": "string" },
+        "branch": { "type": "string" },
+        "openingBalance": { "type": "number" },
+        "currentBalance": { "type": "number" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "bankName", "accountName", "accountNumber"]
+    },
+    "BankTransaction": {
+      "title": "BankTransaction",
+      "description": "Bank transaction journal record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "accountId": { "type": "string" },
+        "bankName": { "type": "string" },
+        "type": { "type": "string" },
+        "amount": { "type": "number" },
+        "description": { "type": "string" },
+        "reference": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "accountId", "type", "amount"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Business overhead operational expense",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "accountId": { "type": "string" },
+        "description": { "type": "string" },
+        "reference": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "category", "amount"]
+    },
+    "Income": {
+      "title": "Income",
+      "description": "Other non-operating business income",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "accountId": { "type": "string" },
+        "description": { "type": "string" },
+        "reference": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "category", "amount"]
+    },
+    "CustomerPayment": {
+      "title": "CustomerPayment",
+      "description": "Receipt voucher collected from customer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "accountId": { "type": "string" },
+        "reference": { "type": "string" },
+        "note": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "customerId", "amount"]
+    },
+    "SupplierPayment": {
+      "title": "SupplierPayment",
+      "description": "Payment voucher remitted to supplier",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "supplierId": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "accountId": { "type": "string" },
+        "reference": { "type": "string" },
+        "note": { "type": "string" },
+        "user": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "supplierId", "amount"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "System alerts and stock notifications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "date": { "type": "string" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["id", "title", "message"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable audit security log",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "action": { "type": "string" },
+        "user": { "type": "string" },
+        "details": { "type": "string" }
+      },
+      "required": ["id", "date", "action", "user"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and credentials"
+    },
+    "/settings/{settingId}": {
+      "schema": "Setting",
+      "description": "System settings key-value entries"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Inventory product items"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Product categories"
+    },
+    "/customers/{customerId}": {
+      "schema": "Customer",
+      "description": "Customer list and contact details"
+    },
+    "/suppliers/{supplierId}": {
+      "schema": "Supplier",
+      "description": "Supplier directory"
+    },
+    "/sales/{saleId}": {
+      "schema": "Sale",
+      "description": "Sales invoices"
+    },
+    "/saleItems/{saleItemId}": {
+      "schema": "SaleItem",
+      "description": "Line items for sales invoices"
+    },
+    "/purchases/{purchaseId}": {
+      "schema": "Purchase",
+      "description": "Purchase orders"
+    },
+    "/purchaseItems/{purchaseItemId}": {
+      "schema": "PurchaseItem",
+      "description": "Line items for purchase orders"
+    },
+    "/salesReturns/{returnId}": {
+      "schema": "SalesReturn",
+      "description": "Sales returns"
+    },
+    "/purchaseReturns/{returnId}": {
+      "schema": "PurchaseReturn",
+      "description": "Purchase returns"
+    },
+    "/stockMovements/{movementId}": {
+      "schema": "StockMovement",
+      "description": "Stock audit trail"
+    },
+    "/cashTransactions/{transactionId}": {
+      "schema": "CashTransaction",
+      "description": "Cash in and cash out transactions"
+    },
+    "/bankAccounts/{accountId}": {
+      "schema": "BankAccount",
+      "description": "Bank account ledgers"
+    },
+    "/bankTransactions/{transactionId}": {
+      "schema": "BankTransaction",
+      "description": "Bank journal entries"
+    },
+    "/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Expense entries"
+    },
+    "/income/{incomeId}": {
+      "schema": "Income",
+      "description": "Income records"
+    },
+    "/customerPayments/{paymentId}": {
+      "schema": "CustomerPayment",
+      "description": "Payments collected from customers"
+    },
+    "/supplierPayments/{paymentId}": {
+      "schema": "SupplierPayment",
+      "description": "Payments paid to suppliers"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "System notifications"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "System activity logs"
+    }
+  }
+}

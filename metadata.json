@@ -1,0 +1,6 @@
+{
+  "name": "Business Management & Accounting",
+  "description": "Comprehensive business management, accounting, stock inventory, and invoicing software for Dil Mohammad Sohel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
